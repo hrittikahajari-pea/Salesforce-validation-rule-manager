@@ -8,7 +8,16 @@ const PORT = 4000;
 const validationRuleQuery =
   "SELECT Id, ValidationName, Active, Description, EntityDefinition.QualifiedApiName FROM ValidationRule WHERE EntityDefinition.QualifiedApiName = 'Account'";
 
-app.use(cors({ origin: "http://localhost:5173" }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://salesforce-validation-rule-manager-coral.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+  })
+);
 app.use(express.json());
 
 app.get("/api/validation-rules", async (req, res) => {
