@@ -47,6 +47,8 @@ const processSteps = [
 ];
 
 function App() {
+  const apiBaseUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [salesforceAuth, setSalesforceAuth] = useState({
     accessToken: "",
@@ -125,7 +127,7 @@ function App() {
     setStatusType("info");
 
     try {
-      const response = await fetch("http://localhost:4000/api/validation-rules", {
+      const response = await fetch(`${apiBaseUrl}/api/validation-rules`, {
         headers: {
           Authorization: `Bearer ${salesforceAuth.accessToken}`,
           "x-instance-url": salesforceAuth.instanceUrl,
@@ -134,6 +136,11 @@ function App() {
 
       if (!response.ok) {
         const errorBody = await response.text();
+
+        console.error("Salesforce Tooling API status:", response.status);
+        console.error("Salesforce Tooling API status text:", response.statusText);
+        console.error("Salesforce Tooling API error body:", errorBody);
+
         let salesforceErrorMessage = errorBody;
 
         try {
@@ -245,7 +252,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/api/deploy-validation-rules",
+        `${apiBaseUrl}/api/deploy-validation-rules`,
         {
           method: "POST",
           headers: {
@@ -268,7 +275,9 @@ function App() {
 
       setChangedRules([]);
       setHasUndeployedChanges(false);
-      setStatusMessage(responseData.message || "Changes deployed successfully.");
+      setStatusMessage(
+        responseData.message || "Changes deployed successfully."
+      );
       setStatusType("success");
     } catch (error) {
       console.error("Validation rule deployment failed:", error);
