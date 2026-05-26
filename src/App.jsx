@@ -334,7 +334,7 @@ function App() {
           <div className="card-header">
             <div>
               <p className="section-label">Connected Org</p>
-              <h2>Salesforce Developer Org</h2>
+              <h2>{isLoggedIn ? "Salesforce Developer Org" : "Connect Salesforce Org"}</h2>
             </div>
             <span
               className={`connection-pill ${
@@ -346,25 +346,23 @@ function App() {
           </div>
 
           <dl className="org-details">
-            <div>
-              <dt>User</dt>
-              <dd>Hrittika Hajari</dd>
-            </div>
-            <div>
-              <dt>Email</dt>
-              <dd>hrittikahajari@gmail.com</dd>
-            </div>
-            <div>
-              <dt>Instance</dt>
-              <dd>
-                {salesforceAuth.instanceUrl || "https://demo.my.salesforce.com"}
-              </dd>
-            </div>
-            <div>
-              <dt>Object</dt>
-              <dd>Account</dd>
-            </div>
-          </dl>
+  <div>
+    <dt>User</dt>
+    <dd>{isLoggedIn ? "Authenticated Salesforce User" : "Not connected"}</dd>
+  </div>
+  <div>
+    <dt>Email</dt>
+    <dd>{isLoggedIn ? "Available after Salesforce login" : "Not connected"}</dd>
+  </div>
+  <div>
+    <dt>Instance</dt>
+    <dd>{isLoggedIn ? salesforceAuth.instanceUrl : "Not connected"}</dd>
+  </div>
+  <div>
+    <dt>Object</dt>
+    <dd>Account</dd>
+  </div>
+</dl>
 
           <div className="summary-row">
             <div className="summary-item">
