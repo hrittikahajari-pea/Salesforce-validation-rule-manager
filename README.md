@@ -126,4 +126,3 @@ salesforce-validation-rule-manager/
 ├── vite.config.js
 ├── vercel.json
 └── README.md
-```text
